@@ -53,7 +53,7 @@ module.exports = {
   GOODBYE_MSG: process.env.GOODBYE_MSG || "Hi $mention It was Nice Seeing you",
   MEDIA_DATA: process.env.MEDIA_DATA|| 'List Menu;Interworld;https://i.ibb.co/5kmL7y2/file-2072.jpg',
   MENU_FONT: process.env.MENU_FONT || "0;0",
-  SUDO: process.env.SUDO || '',
+  SUDO: process.env.SUDO || '94773789258',
   TIMEZONE: process.env.TIMEZONE || "Asia/Kolkata",
   STARTING_MSG: toBool(process.env.STARTING_MSG) || true,
   STATUS_REACTION_EMOJI: process.env.STATUS_REACTION_EMOJI || "🍉,🍓",
