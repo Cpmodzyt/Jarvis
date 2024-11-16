@@ -25,7 +25,7 @@ module.exports = {
   ANTILINK_MSG: process.env.ANTILINK_MSG || "```Link Not allowed in this group!!```",
   ANTIBOT_MSG: process.env.ANTIBOT_MSG || "```Antibot deleted successfully!!```",
   ANTIWORD_MSG: process.env.ANTIWORD_MSG || "```Antiword deleted successfully!!```",
-  ALIVE_DATA : process.env.ALIVE_DATA || "_*Hy &sender i am alive now*_\n\n_PLATFORM: &platform_\n_RUNTIME : &runtime_\n\n_.",
+  ALIVE_DATA : process.env.ALIVE_DATA || "*🌸 Kon'nichiwa &sender I am alive now*\n\n*🏷️ Platform: &platform*\n*💤 Runtime : &runtime*\n\n*🪄 Maintained by Itzmecp .*",
   SESSION_ID: process.env.SESSION_ID || 'Jarvis_821c_1040_6617_7a18_d229_fafc_2747_b6b1',
   LANG: process.env.LANG || 'EN',
   SETVV: process.env.SETVV || 'DM',
