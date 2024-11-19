@@ -1,12 +1,15 @@
 /*------------------------------------------------------------------------------------------------------------------------------------------------------
 
+
 Copyright (C) 2023 Loki - Xer.
-Licensed under the GPL-3.0 License; you may not use this file except in compliance with the License.
-Jarvis - Loki-Xer
+Licensed under the  GPL-3.0 License;
+you may not use this file except in compliance with the License.
+Jarvis - Loki-Xer 
+
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------*/
 
-const { System } = require("../lib");
+const { System, setData } = require("../lib");
 const { parsedJid } = require("./client/");
 
 System({
@@ -15,8 +18,7 @@ System({
     desc: "Set profile picture",
     type: "whatsapp",
 }, async (message) => {
-    if (!message.reply_message || !message.reply_message.image)
-        return await message.reply("_Reply to a photo__");
+    if (!message.reply_message || !message.reply_message.image) return await message.reply("_Reply to a photo__");
     let buff = await message.reply_message.download();
     await message.setPP(message.user.jid, buff);
     return await message.reply("_Profile Picture Updated__");
@@ -56,6 +58,24 @@ System({
 }, async (message) => {
     if (!message.quoted) return await message.reply("_Reply to a message to delete it!_");
     await message.client.sendMessage(message.chat, { delete: message.reply_message.data.key });
+});
+
+System({
+    pattern: "antiviewones",
+    fromMe: true,
+    desc: "To get info about promot and demote",
+    type: "manage",
+}, async (message, match) => {
+    if (match === "on") { 
+      const antiviewones = await setData(message.user.id, "active", "true", "antiviewones");
+      return await message.send("_*activated*_");
+    } else if (match === "off") {
+      const antiviewones = await setData(message.user.id, "disactive", "false", "antiviewones");
+      return await message.send("_*deactivated*_");
+    } else {
+      if (!message.isGroup) return message.send("_*antiviewones on/off*_");
+      await message.send("\n*Choose a a settings to on/off antiviewones*\n",{ values: [{ displayText: "*on*", id: "antiviewones on" }, { displayText: "*off*", id: "antiviewones off" }], withPrefix: true, participates: [message.sender] }, "poll");
+    };
 });
 
 System({
@@ -300,4 +320,21 @@ System({
 	if (!available_privacy.includes(match)) return await message.send(`_action must be *${available_privacy.join('/')}* values_`);
 	await message.client.updateGroupsAddPrivacy(match)
 	await message.send(`_Privacy Updated to *${match}*_`);
+});
+
+System({
+    pattern: 'msgpin ?(.*)',
+    fromMe: true,
+    desc: 'pin a message in chat',
+    type: 'whatsapp',
+}, async (message, match, m) => {
+    if (!message.reply_message || !match) return await message.reply(`_Reply to a message to pin it_\n\n*Example*: _msgpin 24 =for pin msg for 24 hour_\n _msgpin 7 = for pin msg for 7days_\n _msgpin 30 = for pin msg for 30 days_`);
+    var fek = { '24': 86400, '7': 604800, '30': 2592000 };
+    var time = fek[match];
+    if (!time) return await message.reply(`_Reply to a message to pin it_\n\n*Example*: _msgpin 24 =for pin msg for 24 hour_\n _msgpin 7 = for pin msg for 7days_\n _msgpin 30 = for pin msg for 30 days_`);
+    await message.client.sendMessage(m.jid, {
+        pin: await message.reply_message.data.key,
+        type: 1,
+        time
+    });
 });
